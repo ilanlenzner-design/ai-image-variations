@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Variations - Powered by Gemini</title>
+    <meta name="description"
+        content="Upload an image and let AI generate stunning variations with different styles, colors, and vibes">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                <h1>AI Image Variations</h1>
+            </div>
+            <p class="subtitle">Transform your images with AI-powered style variations</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Upload Section -->
+            <section class="upload-section" id="upload-section">
+                <div class="upload-area" id="upload-area">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M17 8L12 3L7 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <h2>Upload Your Image</h2>
+                    <p>Drag and drop or click to select</p>
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                    <button class="btn-primary" id="select-btn">Select Image</button>
+                </div>
+            </section>
+
+            <!-- API Key Section -->
+            <section class="api-key-section" id="api-key-section">
+                <div class="api-key-card">
+                    <h3>Gemini API Key Required</h3>
+                    <p>Enter your Gemini API key to generate image variations</p>
+                    <input type="password" id="api-key-input" placeholder="Enter your Gemini API key"
+                        class="api-key-input">
+                    <button class="btn-secondary" id="save-api-key-btn">Save API Key</button>
+                    <p class="api-key-hint">Get your API key from <a href="https://makersuite.google.com/app/apikey"
+                            target="_blank">Google AI Studio</a></p>
+                </div>
+            </section>
+
+            <!-- Original Image Section -->
+            <section class="original-section" id="original-section" style="display: none;">
+                <h2>Original Image</h2>
+                <div class="original-image-container">
+                    <img id="original-image" alt="Original uploaded image">
+                </div>
+                <div class="analysis-container" id="analysis-container">
+                    <h3>AI Analysis</h3>
+                    <p id="analysis-text" class="analysis-text"></p>
+                </div>
+
+                <!-- Variation Settings -->
+                <div class="settings-container">
+                    <h3>Variation Settings</h3>
+                    <div class="settings-grid">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label for="keep-colors-toggle" class="setting-label">Keep Original Colors</label>
+                                <p class="setting-description">Maintain the same color palette across all variations</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="keep-colors-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label for="keep-composition-toggle" class="setting-label">Keep Composition</label>
+                                <p class="setting-description">Maintain the same subjects, patterns, and characters</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="keep-composition-toggle" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-primary btn-generate" id="generate-btn">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Generate Variations
+                </button>
+            </section>
+
+            <!-- Loading Section -->
+            <section class="loading-section" id="loading-section" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p class="loading-text" id="loading-text">Analyzing image...</p>
+            </section>
+
+            <!-- Variations Grid -->
+            <section class="variations-section" id="variations-section" style="display: none;">
+                <h2>Generated Variations</h2>
+                <div class="variations-grid" id="variations-grid">
+                    <!-- Variation cards will be inserted here -->
+                </div>
+                <button class="btn-secondary btn-new" id="new-image-btn">Upload New Image</button>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Powered by Google Gemini AI</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
