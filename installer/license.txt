@@ -1,0 +1,37 @@
+AI IMAGE VARIATIONS - SOFTWARE LICENSE
+
+Copyright (c) 2024
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to use
+the Software in conjunction with Adobe After Effects, subject to the following
+conditions:
+
+1. The Software is provided "as is", without warranty of any kind, express or
+   implied, including but not limited to the warranties of merchantability,
+   fitness for a particular purpose and noninfringement.
+
+2. In no event shall the authors or copyright holders be liable for any claim,
+   damages or other liability, whether in an action of contract, tort or
+   otherwise, arising from, out of or in connection with the Software or the
+   use or other dealings in the Software.
+
+3. This Software requires a Google AI Studio API key for functionality. Use of
+   Google's APIs is subject to Google's Terms of Service and API usage policies.
+   Users are responsible for obtaining their own API key and complying with
+   Google's terms.
+
+4. The Software integrates with:
+   - Google Gemini 2.5 Flash (for image analysis)
+   - Google Imagen 4.0 (for image generation)
+
+   These services are provided by Google and subject to their terms and policies.
+
+5. API keys and user data are stored locally on the user's machine. No data is
+   transmitted to any server operated by the Software creators.
+
+6. Adobe, After Effects, and CEP are trademarks of Adobe Inc. This Software is
+   an independent extension and is not affiliated with, officially endorsed,
+   or sponsored by Adobe Inc.
+
+By installing this Software, you agree to these terms and conditions.

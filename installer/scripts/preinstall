@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# AI Image Variations - Pre Install Script
+# This script checks system requirements
+
+set -e
+
+echo "Checking system requirements..."
+
+# Check if After Effects is installed
+AE_PATHS=(
+    "/Applications/Adobe After Effects 2024"
+    "/Applications/Adobe After Effects 2023"
+    "/Applications/Adobe After Effects 2022"
+    "/Applications/Adobe After Effects 2021"
+    "/Applications/Adobe After Effects 2020"
+    "/Applications/Adobe After Effects CC 2019"
+)
+
+AE_FOUND=false
+for AE_PATH in "${AE_PATHS[@]}"; do
+    if [ -d "$AE_PATH" ]; then
+        AE_FOUND=true
+        echo "✅ Found: $AE_PATH"
+        break
+    fi
+done
+
+if [ "$AE_FOUND" = false ]; then
+    echo "⚠️  Warning: Adobe After Effects not found in standard location"
+    echo "   Installation will continue, but please ensure After Effects is installed"
+fi
+
+# Check available disk space (need at least 10MB)
+AVAILABLE_SPACE=$(df -k "/Library/Application Support" | tail -1 | awk '{print $4}')
+if [ "$AVAILABLE_SPACE" -lt 10240 ]; then
+    echo "❌ Error: Insufficient disk space"
+    exit 1
+fi
+
+echo "✅ System requirements check passed"
+
+exit 0

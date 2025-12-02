@@ -324,9 +324,9 @@ async function generateSingleVariation(style) {
         const promptData = await promptCreationResponse.json();
         const imagePrompt = promptData.candidates[0].content.parts[0].text;
 
-        // Step 2: Generate image using Imagen 4.0 API
+        // Step 2: Generate image using Imagen 3.0 API
         const imageResponse = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict`,
+            `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:predict`,
             {
                 method: 'POST',
                 headers: {
@@ -347,6 +347,7 @@ async function generateSingleVariation(style) {
 
         if (!imageResponse.ok) {
             const errorData = await imageResponse.json();
+            console.error('Image generation error details:', JSON.stringify(errorData, null, 2));
             throw new Error(errorData.error?.message || 'Failed to generate image');
         }
 

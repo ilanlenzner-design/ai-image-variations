@@ -1,0 +1,86 @@
+#!/bin/bash
+
+# AI Image Variations - Post Install Script
+# This script installs the CEP extension and enables debug mode
+
+set -e
+
+EXTENSION_NAME="AIImageVariations"
+CEP_PATH="/Library/Application Support/Adobe/CEP/extensions"
+INSTALL_PATH="$CEP_PATH/$EXTENSION_NAME"
+
+echo "=========================================="
+echo "AI Image Variations Extension Installer"
+echo "=========================================="
+echo ""
+
+# Create CEP extensions directory if it doesn't exist
+echo "📁 Creating CEP extensions directory..."
+mkdir -p "$CEP_PATH"
+
+# Copy extension files to CEP extensions folder
+echo "📦 Installing extension to: $INSTALL_PATH"
+
+# The payload is extracted to a temporary location by the installer
+# We need to copy from there to the final destination
+SOURCE_DIR="$2/AIImageVariations"
+
+if [ -d "$SOURCE_DIR" ]; then
+    # Remove old installation if exists
+    if [ -d "$INSTALL_PATH" ]; then
+        echo "🗑️  Removing old installation..."
+        rm -rf "$INSTALL_PATH"
+    fi
+
+    # Copy new files
+    cp -R "$SOURCE_DIR" "$INSTALL_PATH"
+
+    # Set proper permissions
+    echo "🔐 Setting permissions..."
+    chmod -R 755 "$INSTALL_PATH"
+
+    echo "✅ Extension files installed successfully"
+else
+    echo "❌ Error: Source directory not found at $SOURCE_DIR"
+    exit 1
+fi
+
+# Enable debug mode for various After Effects versions
+echo "🐛 Enabling debug mode..."
+
+# Get the current user (the one who ran the installer)
+CURRENT_USER="${USER}"
+if [ -z "$CURRENT_USER" ]; then
+    CURRENT_USER=$(stat -f "%Su" /dev/console)
+fi
+
+# Enable for CEP 9, 10, and 11 (covers AE CC 2019-2024)
+for VERSION in 9 10 11; do
+    sudo -u "$CURRENT_USER" defaults write com.adobe.CSXS.$VERSION PlayerDebugMode 1
+done
+
+echo "✅ Debug mode enabled for CEP versions 9, 10, and 11"
+
+# Check if After Effects is running
+AE_RUNNING=$(pgrep "After Effects" || true)
+if [ ! -z "$AE_RUNNING" ]; then
+    echo ""
+    echo "⚠️  After Effects is currently running."
+    echo "   Please quit and restart After Effects for changes to take effect."
+fi
+
+echo ""
+echo "=========================================="
+echo "✅ Installation Complete!"
+echo "=========================================="
+echo ""
+echo "Next Steps:"
+echo "1. Restart After Effects (if running)"
+echo "2. Go to: Window → Extensions → AI Image Variations"
+echo "3. Get your API key from: https://aistudio.google.com/app/apikey"
+echo "4. Paste the API key in the extension and click 'Save Key'"
+echo "5. Start creating image variations!"
+echo ""
+echo "=========================================="
+
+exit 0
